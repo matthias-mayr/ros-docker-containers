@@ -7,10 +7,10 @@
 For Ubuntu (tested on 18.04) and Nvidia graphics card. Other manifacturers could be supported - feel free to send a merge request.
 
 ### Docker 
-'''
+```
 sudo apt update
 sudo apt install docker.io
-'''
+```
 
 
 ### Nvidia graphics support
