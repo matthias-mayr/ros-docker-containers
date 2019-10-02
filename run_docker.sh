@@ -48,13 +48,15 @@ else
     dist_choice=$1
 fi
 
+# The IN_DOCKER environment variable can be used to do things in the bashrc.
+
 if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ]  ; then
     echo -e "\nStarting melodic container\n"
-    docker run -it --user=$( id -u $USER ):$( id -g $USER ) --net=host --privileged --env="DISPLAY" --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --runtime=nvidia ros:kinetic-desktop-full-9-graphics-nvidia
+    docker run -it --user=$( id -u $USER ):$( id -g $USER ) --net=host --privileged --env="DISPLAY" -e IN_DOCKER=true --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --runtime=nvidia ros:kinetic-desktop-full-9-graphics-nvidia
     
 elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" ]; then
     echo -e "\nStarting kinetic container\n"
-    nvidia-docker run -it --user=$( id -u $USER ):$( id -g $USER ) --device=/dev/dri:/dev/dri --ipc=host --net=host --privileged --env="DISPLAY" --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ros:kinetic-desktop-full-9-graphics-nvidia
+    nvidia-docker run -it --user=$( id -u $USER ):$( id -g $USER ) --device=/dev/dri:/dev/dri --ipc=host --net=host --privileged --env="DISPLAY"  -e IN_DOCKER=true --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ros:kinetic-desktop-full-9-graphics-nvidia
 
 else
     echo "Unknown distribution: $dist_choice"
