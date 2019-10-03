@@ -27,12 +27,16 @@ get_distribution () {
 
 get_graphics () {
     echo 'Please enter your choice: '
-    options=("nvidia" "Quit")
+    options=("nvidia" "intel" "Quit")
     select graphics_choice in "${options[@]}"
     do
         case $graphics_choice in
             "nvidia")
-                echo "You chose $dist_choice"
+                echo "You chose $dist_choice with $graphics_choice"
+                break
+                ;;
+            "intel")
+                echo "You chose $dist_choice with $graphics_choice"
                 break
                 ;;
             "Quit")
@@ -60,9 +64,15 @@ if [ "$dist_choice" == "$melodic_bionic" ]; then
         
     if [ "$graphics_choice" == "nvidia" ]; then
 
-        docker build melodic-bionic/9_graphics_nvidia -t ros:melodic-desktop-full-9-graphics-nvidia
+         docker build melodic-bionic/9_graphics_nvidia -t ros:melodic-desktop-full-9-graphics-nvidia
         
     fi
+    if [ "$graphics_choice" == "intel" ]; then
+
+        echo "No option for nvidia with melodic yet"
+        return false        
+    fi
+
 elif [ "$dist_choice" == "$kinetic_xenial" ]; then
 
     docker build kinetic-xenial/1_system -t ros:kinetic-desktop-full-1-system
@@ -75,7 +85,12 @@ elif [ "$dist_choice" == "$kinetic_xenial" ]; then
         
     if [ "$graphics_choice" == "nvidia" ]; then
 
-        docker build kinetic-xenial/9_graphics_nvidia -t ros:kinetic-desktop-full-9-graphics-nvidia
+         docker build kinetic-xenial/9_graphics_nvidia -t ros:kinetic-desktop-full-9-graphics-nvidia
+        
+    fi
+    if [ "$graphics_choice" == "intel" ]; then
+
+         docker build kinetic-xenial/9_graphics_intel -t ros:kinetic-desktop-full-9-graphics-intel
         
     fi
 fi
