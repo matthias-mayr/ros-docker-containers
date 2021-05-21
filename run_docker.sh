@@ -53,7 +53,7 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
     # Parameter explanation:
     #
     # -e IN_DOCKER=true : Environment variable can be used to do things in the bashrc.
-    docker run -it --user=$( id -u $USER ):$( id -g $USER ) --net=host --privileged --env="DISPLAY" -e IN_DOCKER=true --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --runtime=nvidia ros:kinetic-desktop-full-9-graphics-nvidia
+    docker run -it --user=$( id -u $USER ):$( id -g $USER ) --net=host --privileged --env="DISPLAY" -e IN_DOCKER=true --workdir="/home/$USER" --volume="/home/$USER:/home/$USER" --volume="/etc/group:/etc/group:ro" --volume="/etc/passwd:/etc/passwd:ro" --volume="/etc/shadow:/etc/shadow:ro" --volume="/etc/sudoers.d:/etc/sudoers.d:ro" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" --runtime=nvidia ros:melodic-desktop-full-9-graphics-nvidia
     
 elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" ]; then
     echo -e "\nStarting kinetic container\n"
