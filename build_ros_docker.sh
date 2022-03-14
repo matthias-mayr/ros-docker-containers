@@ -5,7 +5,8 @@ get_distribution () {
     echo 'Please enter your choice: '
     kinetic_xenial="Kinetic Xenial 16.04"
     melodic_bionic="Melodic Bionic 18.04"
-    distribution=("$kinetic_xenial" "$melodic_bionic" "Quit")
+    noetic_focal="Noetic Focal 20.04"
+    distribution=("$kinetic_xenial" "$melodic_bionic" "$noetic_focal" "Quit")
     select dist_choice in "${distribution[@]}"
     do
         case $dist_choice in
@@ -15,6 +16,10 @@ get_distribution () {
                 ;;
             $melodic_bionic)
                 echo "you chose choice $dist_choice"
+                break
+                ;;
+            $noetic_focal)
+                echo "you chose the choice $dist_choice"
                 break
                 ;;
             "Quit")
@@ -32,7 +37,7 @@ get_graphics () {
     do
         case $graphics_choice in
             "nvidia")
-                echo "You chose $dist_choice"
+                echo "You chose $graphics_choice"
                 break
                 ;;
             "Quit")
@@ -78,5 +83,19 @@ elif [ "$dist_choice" == "$kinetic_xenial" ]; then
         docker build kinetic-xenial/9_graphics_nvidia -t ros:kinetic-desktop-full-9-graphics-nvidia
         
     fi
-fi
+elif [ "$dist_choice" == "$noetic_focal" ]; then
 
+    docker build noetic-focal/1_system -t ros:noetic-desktop-full-1-system
+
+    docker build noetic-focal/2_user -t ros:noetic-desktop-full-2-user
+
+    docker build noetic-focal/3_programming -t ros:noetic-desktop-full-3-programming
+
+    docker build noetic-focal/4_ros -t ros:noetic-desktop-full-4-ros
+        
+    if [ "$graphics_choice" == "nvidia" ]; then
+
+        docker build noetic-focal/9_graphics_nvidia -t ros:noetic-desktop-full-9-graphics-nvidia
+        
+    fi
+fi
