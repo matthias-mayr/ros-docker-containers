@@ -53,6 +53,9 @@ else
     dist_choice=$1
 fi
 
+container_name=${dist_choice// /_}	# replace space with underscore
+container_name=${container_name,,}	# lowercase
+
 if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ]  ; then
     echo -e "\nStarting melodic container\n"
     # Parameter explanation:
@@ -72,6 +75,7 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
 		--volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
 		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 		--runtime=nvidia \
+		--name "rss_$container_name" \
 		ros:melodic-desktop-full-9-graphics-nvidia
     
 elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" ]; then
@@ -96,6 +100,7 @@ elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" 
 		--volume="/etc/shadow:/etc/shadow:ro" \
 		--volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
 		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+		--name "rss_$container_name" \
 		ros:kinetic-desktop-full-9-graphics-nvidia
 
 elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; then
@@ -120,6 +125,7 @@ elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; 
 		--volume="/etc/shadow:/etc/shadow:ro" \
 		--volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
 		--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
+		--name "rss_$container_name" \
 		ros:noetic-desktop-full-9-graphics-nvidia
 
 
