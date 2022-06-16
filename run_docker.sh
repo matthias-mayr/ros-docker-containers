@@ -68,7 +68,7 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
 		--env="DISPLAY" \
 		-e IN_DOCKER=true \
 		--workdir="/home/$USER" \
-		--volume="/home/$USER/lund:/home/$USER" \  # also maps .bashrc
+		--volume="/home/$USER:/home/$USER" \  # also maps .bashrc
 		#--volume="/etc/group:/etc/group:ro" \
 		--volume="/etc/passwd:/etc/passwd:ro" \
 		--volume="/etc/shadow:/etc/shadow:ro" \
@@ -115,7 +115,6 @@ elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; 
 		--ipc=host \
 		--net=host \
 		--privileged \
-		--sysctl net.ipv6.conf.all.disable_ipv6=1 \
 		--env="DISPLAY"  \
 		-e IN_DOCKER=true \
 		--workdir="/home/$USER" \
