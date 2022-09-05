@@ -68,8 +68,8 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
 		--env="DISPLAY" \
 		-e IN_DOCKER=true \
 		--workdir="/home/$USER" \
-		--volume="/home/$USER:/home/$USER" \  # also maps .bashrc
-		#--volume="/etc/group:/etc/group:ro" \
+		--volume="/home/$USER:/home/$USER" \
+		--volume="/etc/group:/etc/group:ro" \
 		--volume="/etc/passwd:/etc/passwd:ro" \
 		--volume="/etc/shadow:/etc/shadow:ro" \
 		--volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
