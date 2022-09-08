@@ -32,7 +32,7 @@ get_distribution () {
 
 get_graphics () {
     echo 'Please enter your choice: '
-    options=("nvidia" "intel" "Quit")
+    options=("nvidia" "intel" "none" "Quit")
     select graphics_choice in "${options[@]}"
     do
         case $graphics_choice in
@@ -44,6 +44,10 @@ get_graphics () {
                 echo "You chose $dist_choice with $graphics_choice"
                 break
                 ;;
+            "none")
+                echo "You chose no 3D graphics support"
+                break
+                ;;
             "Quit")
                 return false
                 ;;
@@ -53,61 +57,43 @@ get_graphics () {
 }
 
 
-get_distribution
-    
+get_distribution  
 get_graphics
 
 if [ "$dist_choice" == "$melodic_bionic" ]; then
-
     docker build melodic-bionic/1_system -t ros:melodic-desktop-full-1-system
-
     docker build melodic-bionic/2_user -t ros:melodic-desktop-full-2-user
-
     docker build melodic-bionic/3_programming -t ros:melodic-desktop-full-3-programming
-
     docker build melodic-bionic/4_ros -t ros:melodic-desktop-full-4-ros
         
     if [ "$graphics_choice" == "nvidia" ]; then
-
         docker build melodic-bionic/9_graphics_nvidia -t ros:melodic-desktop-full-9-graphics-nvidia
-        
     elif [ "$graphics_choice" == "intel" ]; then
-
-        echo "No option for nvidia with melodic yet"
+        echo "No option for intel with melodic yet"
         return false        
     fi
 
 elif [ "$dist_choice" == "$kinetic_xenial" ]; then
-
     docker build kinetic-xenial/1_system -t ros:kinetic-desktop-full-1-system
-
     docker build kinetic-xenial/2_user -t ros:kinetic-desktop-full-2-user
-
     docker build kinetic-xenial/3_programming -t ros:kinetic-desktop-full-3-programming
-
     docker build kinetic-xenial/4_ros -t ros:kinetic-desktop-full-4-ros
         
     if [ "$graphics_choice" == "nvidia" ]; then
-
         docker build kinetic-xenial/9_graphics_nvidia -t ros:kinetic-desktop-full-9-graphics-nvidia
-        
     elif [ "$graphics_choice" == "intel" ]; then
-
          docker build kinetic-xenial/9_graphics_intel -t ros:kinetic-desktop-full-9-graphics-intel
     fi
 elif [ "$dist_choice" == "$noetic_focal" ]; then
-
     docker build noetic-focal/1_system -t ros:noetic-desktop-full-1-system
-
     docker build noetic-focal/2_user -t ros:noetic-desktop-full-2-user
-
     docker build noetic-focal/3_programming -t ros:noetic-desktop-full-3-programming
-
     docker build noetic-focal/4_ros -t ros:noetic-desktop-full-4-ros
-        
     if [ "$graphics_choice" == "nvidia" ]; then
-
         docker build noetic-focal/9_graphics_nvidia -t ros:noetic-desktop-full-9-graphics-nvidia
-        
+    elif [ "$graphics_choice" == "intel" ]; then
+        echo "No option for intel with noetic yet"
+        return false        
+    fi
 fi
 
