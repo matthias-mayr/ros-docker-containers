@@ -9,6 +9,15 @@ Our Docker containers are built on the OSRF images. They add:
 * Convenient build and start scripts with reasonable defaults
 * They automatically share the home folder and network to allow easy usage within an existing environment
 
+## Support Matrix
+| **Graphics/Ubuntu & ROS** | **16.04 Kinetic** | **18.04 Melodic** | **20.04 Focal** |
+|---------------------------|-------------------|-------------------|-----------------|
+| Nvidia                    |         X         |         X         |        X        |
+| Intel                     |         X         |                   |                 |
+| Without 3D support        |         X         |         X         |        X        |
+
+Support for other combinations can be added via merge requests.
+
 ## Setup/Installation
 For Ubuntu (tested on 18.04) and Nvidia graphics card. Other manifacturers could be supported - feel free to send a merge request.
 
