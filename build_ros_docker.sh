@@ -68,7 +68,7 @@ else
     graphics_choice=$2
 fi
 
-if [ "$dist_choice" == "$melodic_bionic" ]; then
+if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ]  ; then
     docker build melodic-bionic/1_system -t ros:melodic-desktop-full-1-system
     docker build melodic-bionic/2_user -t ros:melodic-desktop-full-2-user
     docker build melodic-bionic/3_programming -t ros:melodic-desktop-full-3-programming
@@ -80,7 +80,7 @@ if [ "$dist_choice" == "$melodic_bionic" ]; then
         echo "No option for intel with melodic yet"
         return false        
     fi
-elif [ "$dist_choice" == "$kinetic_xenial" ]; then
+elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" ]; then
     docker build kinetic-xenial/1_system -t ros:kinetic-desktop-full-1-system
     docker build kinetic-xenial/2_user -t ros:kinetic-desktop-full-2-user
     docker build kinetic-xenial/3_programming -t ros:kinetic-desktop-full-3-programming
@@ -91,7 +91,7 @@ elif [ "$dist_choice" == "$kinetic_xenial" ]; then
     elif [ "$graphics_choice" == "intel" ]; then
          docker build kinetic-xenial/9_graphics_intel -t ros:kinetic-desktop-full-9-graphics-intel
     fi
-elif [ "$dist_choice" == "$noetic_focal" ]; then
+elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; then
     docker build noetic-focal/1_system -t ros:noetic-desktop-full-1-system
     docker build noetic-focal/2_user -t ros:noetic-desktop-full-2-user
     docker build noetic-focal/3_programming -t ros:noetic-desktop-full-3-programming
