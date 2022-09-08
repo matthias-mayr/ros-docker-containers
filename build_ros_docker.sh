@@ -56,9 +56,17 @@ get_graphics () {
     done
 }
 
+if [ -z "$1" ]; then
+    get_distribution
+else
+    dist_choice=$1
+fi
 
-get_distribution  
-get_graphics
+if [ -z "$2" ]; then
+    get_graphics
+else
+    graphics_choice=$2
+fi
 
 if [ "$dist_choice" == "$melodic_bionic" ]; then
     docker build melodic-bionic/1_system -t ros:melodic-desktop-full-1-system
@@ -72,7 +80,6 @@ if [ "$dist_choice" == "$melodic_bionic" ]; then
         echo "No option for intel with melodic yet"
         return false        
     fi
-
 elif [ "$dist_choice" == "$kinetic_xenial" ]; then
     docker build kinetic-xenial/1_system -t ros:kinetic-desktop-full-1-system
     docker build kinetic-xenial/2_user -t ros:kinetic-desktop-full-2-user
