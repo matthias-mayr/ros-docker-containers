@@ -39,7 +39,8 @@ sudo apt-get update
 sudo apt install nvidia-docker2
 ```
 
-#### Restart Docker
+### Restart Docker
+For both Nvidia and Intel graphics cards:
 ```
 sudo systemctl daemon-reload
 sudo systemctl restart docker
@@ -53,7 +54,7 @@ Execute `./build-ros-docker.sh` and select the options you want.
 ## Run docker container
 Execute `./run_docker.sh` to get an interactive menu to choose a container to start.
 
-Use `./run_docker.sh melodic`, `run_docker.sh kinetic` or `run_docker.sh noetic` to start a specific version.
+Use `./run_docker.sh melodic nvidia`, `run_docker.sh kinetic intel` or `run_docker.sh noetic nvidia` to start a specific version with their respectice graphics card support.
 # Troubleshooting
 
 ## D-BUS Errors
