@@ -47,10 +47,42 @@ get_distribution () {
     done
 }
 
+get_graphics () {
+    echo 'Please enter your choice: '
+    options=("nvidia" "intel" "none" "Quit")
+    select graphics_choice in "${options[@]}"
+    do
+        case $graphics_choice in
+            "nvidia")
+                echo "You chose $dist_choice with $graphics_choice"
+                break
+                ;;
+            "intel")
+                echo "You chose $dist_choice with $graphics_choice"
+                break
+                ;;
+            "none")
+                echo "You chose no 3D graphics support"
+                break
+                ;;
+            "Quit")
+                return false
+                ;;
+            *) echo "Invalid option $REPLY";;
+        esac
+    done
+}
+
 if [ -z "$1" ]; then
     get_distribution
 else
     dist_choice=$1
+fi
+
+if [ -z "$2" ]; then
+    get_graphics
+else
+    graphics_choice=$2
 fi
 
 container_name=${dist_choice// /_}	# replace space with underscore
@@ -61,7 +93,7 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
     # Parameter explanation:
     #
     # -e IN_DOCKER=true : Environment variable can be used to do things in the bashrc.
-	if [[ "$2" == "nvidia" ]]; then
+	if [[ "$graphics_choice" == "nvidia" ]]; then
 		echo "Running Nvidia support\n"
 		docker run -it \
 			--user=$( id -u $USER ):$( id -g $USER ) \
@@ -79,7 +111,7 @@ if [[ "$dist_choice" == "melodic" ]] || [ "$dist_choice" == "$melodic_bionic" ] 
 			--runtime=nvidia \
 			--name "rss_$container_name" \
 			ros:melodic-desktop-full-9-graphics-nvidia
-	elif [[ "$2" == "intel" ]]; then
+	elif [[ "$graphics_choice" == "intel" ]]; then
 		echo "Melodic bionic with intel acceleration is not supported yet."
 		echo "Feel free to implement it and send a merge request."
 		echo "In the meantime a container without graphics support can be chosen."
@@ -110,7 +142,7 @@ elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" 
     #
     # --sysctl net.ipv6.conf.all.disable_ipv6=1 : Disables IPv6 since that caused package update issues
     # -e IN_DOCKER=true : Environment variable can be used to do things in the bashrc.
-	if [[ "$2" == "nvidia" ]]; then
+	if [[ "$graphics_choice" == "nvidia" ]]; then
 		echo "Running Nvidia support\n"
 		nvidia-docker run -it \
 			--user=$( id -u $USER ):$( id -g $USER ) \
@@ -130,7 +162,7 @@ elif [[ "$dist_choice" == "kinetic" ]] || [ "$dist_choice" == "$kinetic_xenial" 
 			--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 			--name "rss_$container_name" \
 			ros:kinetic-desktop-full-9-graphics-nvidia
-	elif [[ "$2" == "intel" ]]; then
+	elif [[ "$graphics_choice" == "intel" ]]; then
 		export DISPLAY=:0
 		xhost + 
 		docker run -it \
@@ -178,7 +210,7 @@ elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; 
     #
     # --sysctl net.ipv6.conf.all.disable_ipv6=1 : Disables IPv6 since that caused package update issues
     # -e IN_DOCKER=true : Environment variable can be used to do things in the bashrc.
-	if [[ "$2" == "nvidia" ]]; then
+	if [[ "$graphics_choice" == "nvidia" ]]; then
 		echo "Running Nvidia support\n"
 		nvidia-docker run -it \
 			--user=$( id -u $USER ):$( id -g $USER ) \
@@ -197,7 +229,7 @@ elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; 
 			--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 			--name "rss_$container_name" \
 			ros:noetic-desktop-full-9-graphics-nvidia
-	elif [[ "$2" == "intel" ]]; then
+	elif [[ "$graphics_choice" == "intel" ]]; then
 		echo "Noetic focal with intel acceleration is not supported yet."
 		echo "Feel free to implement it and send a merge request."
 		echo "In the meantime a container without graphics support can be chosen."
