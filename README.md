@@ -1,4 +1,4 @@
-# Docker 
+# ROS Docker Containers with accelerated GUI Support
 
 * [OSRF Images we build upon](https://hub.docker.com/r/osrf/ros/tags)
 * [ROS Wiki Doku](http://wiki.ros.org/docker/Tutorials)
