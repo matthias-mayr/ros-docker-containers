@@ -1,4 +1,6 @@
 # ROS Docker Containers with accelerated GUI Support
+**Note Robotlab Lund:** The first go-to solution is `ros-containers` which also supports podman.
+
 
 * [OSRF Images we build upon](https://hub.docker.com/r/osrf/ros/tags)
 * [ROS Wiki Doku](http://wiki.ros.org/docker/Tutorials)
