@@ -260,6 +260,7 @@ elif [[ "$dist_choice" == "noetic" ]] || [ "$dist_choice" == "$noetic_focal" ]; 
 				--volume="/etc/group:/etc/group:ro" \
 				--volume="/etc/passwd:/etc/passwd:ro" \
 				--volume="/etc/shadow:/etc/shadow:ro" \
+				--volume="/etc/sudoers:/etc/sudoers:ro" \
 				--volume="/etc/sudoers.d:/etc/sudoers.d:ro" \
 				--volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 				--name "$container_name" \
