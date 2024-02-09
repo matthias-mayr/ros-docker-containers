@@ -24,7 +24,7 @@ Support for other combinations can be added via merge requests.
 For Ubuntu (tested on 18.04) and Nvidia graphics card. Other manifacturers could be supported - feel free to send a merge request.
 
 ### Docker (required)
-```
+```sh
 sudo apt update
 sudo apt install docker.io
 ```
@@ -33,21 +33,24 @@ sudo apt install docker.io
 
 * [Background: ROS Wiki page on docker hardware acceleration](http://wiki.ros.org/docker/Tutorials/Hardware%20Acceleration)
 * We use `nvidia-docker2`
-* The installation comes from [here](https://github.com/nvidia/nvidia-docker/wiki/Installation-(version-2.0))
+* The installation comes from [here](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
 
 #### Add nvidia-docker repo
-```
-curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey ]( \
-  sudo apt-key add -
-distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list ]( \
-  sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+```sh
+curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  && curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
 sudo apt-get update
 ````
 
 #### Install nvidia-docker2
+```sh
+sudo apt-get install -y nvidia-container-toolkit
 ```
-sudo apt install nvidia-docker2
+#### Configure it
+```sh
+sudo nvidia-ctk runtime configure --runtime=docker
 ```
 
 ### Restart Docker
